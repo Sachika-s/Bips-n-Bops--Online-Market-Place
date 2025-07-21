@@ -6,6 +6,7 @@ import { SearchFilters } from "./search-filters";
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { CustomCategory } from "./types";
  
 
 
@@ -28,9 +29,10 @@ const Layout = async ({ children}: Props) => {
 
       },
     },
+    sort:"name"
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories:(doc.subcategories?.docs ??[]).map((doc) => ({
         ...(doc as Category),   //depth is 1, so doc will be a category
@@ -39,10 +41,6 @@ const Layout = async ({ children}: Props) => {
   }));
 
 
-  console.log({
-    data,
-    formattedData,
-  });
 
     return (
         <div className = "flex flex-col min-h-screen">
