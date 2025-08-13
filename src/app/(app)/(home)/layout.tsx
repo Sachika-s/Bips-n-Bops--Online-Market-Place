@@ -1,8 +1,8 @@
 
 import { Suspense } from "react";
-import { Footer } from "./footer";
-import { NavBar } from "./navbar";
-import { SearchFilters, SearchFiltersLoading } from "./search-filters";
+import { Footer } from "@/modules/home/ui/components/footer";
+import { NavBar } from "@/modules/home/ui/components/navbar";
+import { SearchFilters, SearchFiltersLoading } from "@/modules/home/ui/components/search-filters";
 
 //imports for trpc client side
 
