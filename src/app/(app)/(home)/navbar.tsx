@@ -9,7 +9,7 @@ import {cn} from "@/lib/utils";
 
 import { NavbarSidebar } from "./navbar-sidebar";
 import { useState } from "react";
-import { Menu, MenuIcon } from "lucide-react";
+import {  MenuIcon } from "lucide-react";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -89,7 +89,7 @@ export const NavBar = () => {
                     variant="secondary"
                     className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg"
                 >
-                    <Link href ="/sign-in">
+                    <Link prefetch href ="/sign-in">
                         Log in 
                     </Link>
                 </Button>
@@ -98,7 +98,7 @@ export const NavBar = () => {
                     asChild
                      className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:bg-pink-400 transition-colors text-lg"
                 >
-                    <Link href="/sign-up">
+                    <Link prefetch href="/sign-up">
                 
                     Start Selling
                     </Link>
