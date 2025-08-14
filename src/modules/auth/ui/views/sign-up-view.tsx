@@ -9,6 +9,10 @@ import z from "zod";
 import Link from "next/link";
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 
 const poppins = Poppins({
@@ -19,6 +23,21 @@ const poppins = Poppins({
 
 
 export const SignUpView = () => {
+    const router= useRouter();
+     
+    const trpc = useTRPC();
+    const queryClient= useQueryClient();
+    const register = useMutation(trpc.auth.register.mutationOptions({
+        onError: (error) => {
+            toast.error(error.message);
+
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+            router.push("/");
+
+        },
+    }));
     const form = useForm<z.infer<typeof registerSchema>>({
         mode: "all",
         resolver: zodResolver(registerSchema),
@@ -31,7 +50,7 @@ export const SignUpView = () => {
     });
 
     const onSubmit = (values: z.infer<typeof registerSchema>) =>{
-        console.log(values);
+        register.mutate(values);
     }
 
     const username= form.watch("username");
@@ -135,6 +154,7 @@ export const SignUpView = () => {
 
                         />
                         <Button
+                            disabled={register.isPending}
                             type="submit"
                             size="lg"
                             variant= "elevated"

@@ -2,10 +2,10 @@
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 
-import {headers as getHeaders, cookies as getCookies} from "next/headers";
+import {headers as getHeaders} from "next/headers";
 
-import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../schemas";
+import { generateAuthCookie } from "../utils";
 
 
 export const authRouter = createTRPCRouter({
@@ -18,18 +18,11 @@ export const authRouter = createTRPCRouter({
 
 
     }),
-    logout: baseProcedure.mutation( async () => {
-        const cookies = await getCookies();
-        cookies.delete(AUTH_COOKIE);
-        
-
-
-    }),
     register: baseProcedure
         .input(registerSchema) 
         .mutation(async ({ input, ctx })  => {
             const existingData = await ctx.payload.find({
-                collection: "users",
+                collection: 'users',
                 limit: 1,
                 where: {
                     username: {
@@ -48,7 +41,7 @@ export const authRouter = createTRPCRouter({
                 });
             }
             await ctx.payload.create({
-                collection:"users",
+                collection:'users',
                 data:{
                     email: input.email,
                     username: input.username,
@@ -61,7 +54,7 @@ export const authRouter = createTRPCRouter({
 
             });
             const data = await ctx.payload.login({
-                collection: "users",
+                collection: 'users',
                 data: {
                     email: input.email,
                     password: input.password,
@@ -76,24 +69,24 @@ export const authRouter = createTRPCRouter({
                 });
             }
 
-            const cookies = await getCookies();
-            cookies.set({
-                name: AUTH_COOKIE,
+            await generateAuthCookie({
+                prefix: ctx.payload.config.cookiePrefix,
                 value: data.token,
-                httpOnly: true,
-                path: "/",
-                //suggestion - try cross-domain cookie sharing 
-                //sameSite:"none",
-                //domain:""
-
- 
-                
-              });
+        });
+           // return data;
 
         }),
         login: baseProcedure
         .input(loginSchema)
         .mutation(async ({ input, ctx })  => {
+
+            console.log("Login attempt:", {
+                email: input.email,
+                password: input.password,
+            });
+
+
+
             const data = await ctx.payload.login({
                 collection: "users",
                 data: {
@@ -110,19 +103,10 @@ export const authRouter = createTRPCRouter({
                 });
             }
 
-            const cookies = await getCookies();
-            cookies.set({
-                name: AUTH_COOKIE,
+            await generateAuthCookie({
+                prefix: ctx.payload.config.cookiePrefix,
                 value: data.token,
-                httpOnly: true,
-                path: "/",
-                //suggestion - try cross-domain cookie sharing 
-                //sameSite:"none",
-                //domain:""
-
- 
-                
-              });
+        });
                 return data;
         }),
 }); 
