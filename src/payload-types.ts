@@ -191,6 +191,9 @@ export interface Product {
   id: string;
   name: string;
   description?: string | null;
+  /**
+   * Please enter price in CAD
+   */
   price: number;
   category?: (string | null) | Category;
   image?: (string | null) | Media;

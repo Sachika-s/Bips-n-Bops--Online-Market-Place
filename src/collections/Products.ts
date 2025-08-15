@@ -16,6 +16,9 @@ export const Products:CollectionConfig = {
             name: "price",
             type: "number",
             required: true,
+            admin:{
+                description:"Please enter price in CAD"
+            }
 
         },
         {
