@@ -3,10 +3,9 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
 
 
-
-
 export const categoriesRouter = createTRPCRouter({
     getMany: baseProcedure.query(async ({ ctx }) => {
+        
 
         const data = await ctx.payload.find({
             collection:"categories",
@@ -25,7 +24,7 @@ export const categoriesRouter = createTRPCRouter({
             ...doc,
             subcategories:(doc.subcategories?.docs ??[]).map((doc) => ({
                 ...(doc as Category),   //depth is 1, so doc will be a category
-                subcategories: undefined, 
+                //subcategories: undefined, 
                 }))
           }));
 
