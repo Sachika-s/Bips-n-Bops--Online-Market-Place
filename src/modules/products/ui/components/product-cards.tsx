@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-interface ProductCareProps {
+interface ProductCardProps {
     id: string,
     name: string,
     imageUrl?: string | null;
@@ -25,7 +25,7 @@ export const ProductCard = ({
     reviewRating,
     reviewCount,
     price,
-}: ProductCareProps) => {
+}: ProductCardProps) => {
     const router = useRouter();
     const handleUserClick = (e: React.MouseEvent<HTMLDivElement>)=>{
         e.preventDefault();
@@ -34,7 +34,8 @@ export const ProductCard = ({
         router.push(generateTenantURL(tenantSlug));
     }
     return(
-    <Link href={`/product/${id}`}>
+        
+    <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`}>
     
         <div className="hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">
             <div className="relative aspect-square">
