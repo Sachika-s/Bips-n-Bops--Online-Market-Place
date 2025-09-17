@@ -10,7 +10,6 @@ interface CheckoutItemProps {
     productUrl: string;
     tenantUrl : string;
     tenantName: string;
-    id: string; 
     price: number;
     onRemove: () => void;
 };
@@ -22,7 +21,7 @@ export const CheckoutItem = ({
     productUrl,
     tenantUrl,
     tenantName,
-    id,
+
     price,
     onRemove
 }: CheckoutItemProps) => {
@@ -37,7 +36,7 @@ export const CheckoutItem = ({
             <div className="overflow-hidden border-r">
                 <div className ="relative aspect-square h-full">
                     <Image 
-                        src={imageUrl || "./pexels-pramodtiwari-13575099.jpg"}
+                        src={imageUrl || "/pexels-pramodtiwari-13575099.jpg"}
                         alt={name}
                         fill
                         className="object-cover"

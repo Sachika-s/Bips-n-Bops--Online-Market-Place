@@ -17,6 +17,8 @@ import { Categories } from './collections/Categories'
 import { Products } from './collections/Products'
 import { Tags } from './collections/Tags'
 import { Tenants } from './collections/Tenants'
+import { Orders } from './collections/Order'
+import { tenantField } from '@payloadcms/plugin-multi-tenant/fields'
 
 
 
@@ -31,7 +33,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Products, Tags, Tenants],
+  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -50,6 +52,9 @@ export default buildConfig({
       },
       tenantsArrayField:{
         includeDefaultField: false,
+      },
+      tenantField: {
+        name: false,
       },
       userHasAccessToAllTenants: (user) => Boolean(user?.roles?.includes("super-admin"))
 
