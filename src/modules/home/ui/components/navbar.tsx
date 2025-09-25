@@ -50,9 +50,9 @@ const NavBarItem = ({
 
 const navbarItems=[
     {href: "/", children: "Home"},
-    {href: "/about", children: "about"},
-    {href: "/features", children: "features"},
-    {href: "/pricing", children: "pricing"},
+    {href: "/About", children: "About"},
+    {href: "/features", children: "Features"},
+    {href: "/pricing", children: "Pricing"},
      {href: "/contact", children: "Contact"},
 ];
 
@@ -66,7 +66,7 @@ export const NavBar = () => {
         <nav className="h-20 flex border-b justify-between font medium bg-white">
             <Link href="/" className="pl-6 flex items-center">
             <span className={cn("text-5xl font-semibold", poppins .className)}>
-                bipsnbops
+                Bips n Bops
             </span>
             </Link>
 
